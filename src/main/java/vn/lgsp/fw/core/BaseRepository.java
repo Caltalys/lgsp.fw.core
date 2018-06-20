@@ -11,6 +11,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 
@@ -28,12 +29,14 @@ public interface BaseRepository<T,ID extends Serializable> extends JpaRepository
 
 	Class<T> getDomainClass();	
 	
+	EntityPath<T> getEntityPath();
+	
 	Page<T> findPage(@Param("predicate")Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
 	
 	List<T> findAll(@Param("predicate")Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
 	
 	T findOneById(@Param("id") ID id);
 
-	boolean existsById(ID id);
+	boolean existsById(@Param("id")ID id);
 	
 }

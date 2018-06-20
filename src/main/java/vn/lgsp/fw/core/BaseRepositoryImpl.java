@@ -20,6 +20,7 @@ import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.data.querydsl.EntityPathResolver;
 import org.springframework.data.querydsl.QSort;
 import org.springframework.data.querydsl.SimpleEntityPathResolver;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.data.repository.support.PageableExecutionUtils.TotalSupplier;
 import org.springframework.stereotype.Repository;
@@ -35,7 +36,7 @@ import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 
-@Repository
+@NoRepositoryBean
 @Transactional(readOnly=true)
 public class BaseRepositoryImpl<T, ID extends Serializable> 
 	extends QueryDslJpaRepository<T, ID> implements BaseRepository<T, ID>{
@@ -111,19 +112,10 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 		query.where(Expressions.numberPath(Long.class, ePath, "id").eq((Long)id));
 		return query.fetchCount()==1L;
 	}
-
-	private JPAQuery<T> getQuery(EntityPath<?> path) {
-		final JPAQuery<T> query = new JPAQuery<T>(em)
-				.setHint("org.hibernate.cacheable", SystemPropertyUtils.resolvePlaceholders("${conf.default.cacheable:true}"))
-				.from(path);
-		if (MethodUtils.getAccessibleMethod(getDomainClass(), "isDeleted", new Class<?>[0]) != null) {
-			query.where(Expressions.booleanPath(path, "deleted").isFalse());
-		}
-		return query;
-	}
-
+	
 	@SuppressWarnings("unchecked")
-	private EntityPath<T> getEntityPath() {
+	@Override
+	public EntityPath<T> getEntityPath() {
 		final String path = StringUtils.uncapitalize(getDomainClass().getSimpleName());
 		EntityPath<T> ePath = null;
 		try {
@@ -145,5 +137,17 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 		}
 		return ePath;
 	}
+
+	private JPAQuery<T> getQuery(EntityPath<?> path) {
+		final JPAQuery<T> query = new JPAQuery<T>(em)
+				.setHint("org.hibernate.cacheable", SystemPropertyUtils.resolvePlaceholders("${conf.default.cacheable:true}"))
+				.from(path);
+		if (MethodUtils.getAccessibleMethod(getDomainClass(), "isDeleted", new Class<?>[0]) != null) {
+			query.where(Expressions.booleanPath(path, "deleted").isFalse());
+		}
+		return query;
+	}
+
+
 	
 }
