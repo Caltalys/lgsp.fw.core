@@ -1,13 +1,14 @@
-package vn.lgsp.fw.core;
+package vn.lgsp.fw.core.service;
 
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
+
+import vn.lgsp.fw.core.domain.BaseEntity;
 
 public interface BaseService<T extends BaseEntity<T>> {
 	

@@ -1,4 +1,4 @@
-package vn.lgsp.fw.core;
+package vn.lgsp.fw.core.repository;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -23,7 +23,6 @@ import org.springframework.data.querydsl.SimpleEntityPathResolver;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.data.repository.support.PageableExecutionUtils.TotalSupplier;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.SystemPropertyUtils;
 

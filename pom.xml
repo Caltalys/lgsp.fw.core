@@ -73,7 +73,7 @@
 							<outputDirectory>target/generated-sources/annotations</outputDirectory>
 							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
 							<packages>
-								<package>vn.lgsp.fw.core</package>
+								<package>vn.lgsp.fw.core.domain</package>
 							</packages> 
 						</configuration>
 					</execution>

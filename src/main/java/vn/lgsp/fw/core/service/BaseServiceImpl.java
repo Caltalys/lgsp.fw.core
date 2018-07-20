@@ -1,9 +1,8 @@
-package vn.lgsp.fw.core;
+package vn.lgsp.fw.core.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,10 @@ import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
+
+import vn.lgsp.fw.core.domain.BaseEntity;
+import vn.lgsp.fw.core.domain.QBaseEntity;
+import vn.lgsp.fw.core.repository.BaseRepository;
 
 @Service
 @Transactional

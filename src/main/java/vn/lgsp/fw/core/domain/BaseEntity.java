@@ -1,4 +1,4 @@
-package vn.lgsp.fw.core;
+package vn.lgsp.fw.core.domain;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
