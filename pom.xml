@@ -4,10 +4,9 @@
 	<parent>
 		<groupId>vn.lgsp.fw</groupId>
 		<artifactId>lgsp-fw-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>core</artifactId>
-	<version>1.0.0</version>
 
 	<dependencies>
 		<!-- Hibernate -->
