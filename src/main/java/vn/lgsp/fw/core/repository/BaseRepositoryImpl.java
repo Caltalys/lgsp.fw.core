@@ -3,14 +3,14 @@ package vn.lgsp.fw.core.repository;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +41,8 @@ import com.querydsl.jpa.impl.JPAQuery;
 public class BaseRepositoryImpl<T, ID extends Serializable> 
 	extends QueryDslJpaRepository<T, ID> implements BaseRepository<T, ID>{
 
+	private static final Logger log = LoggerFactory.getLogger(BaseRepositoryImpl.class);
+	
 	private EntityManager em;
 	private final EntityPath<T> path;
 	
@@ -128,13 +130,14 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
 				ePath = (EntityPath<T>) field.get(null);
 			}
 		} catch (final IllegalAccessException e) {
-			Logger.getAnonymousLogger().log(Level.INFO, e.getMessage(), e);
+			log.debug(e.getMessage());
 		} catch (ClassNotFoundException e) {
-			Logger.getAnonymousLogger().log(Level.INFO, e.getMessage(), e);
+			log.debug(e.getMessage());
 		}
 		if (ePath == null) {
 			ePath = new EntityPathBase<T>(getDomainClass(), path);
 		}
+		log.info(ePath.getClass().getName());
 		return ePath;
 	}
 
