@@ -3,6 +3,8 @@ package vn.lgsp.fw.core.service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
@@ -24,8 +26,38 @@ import vn.lgsp.fw.core.repository.BaseRepository;
 @Transactional
 public class BaseServiceImpl<T extends BaseEntity<T>, ID> implements BaseService<T> {
 
-	//@Autowired
 	BaseRepository<T, Long> repository;
+	
+	@Override
+	public Page<T> findAll(@Nullable Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
+		if (predicate == null) {
+			predicate = QBaseEntity.baseEntity.deleted.isFalse();
+		}
+
+		if (orders == null || orders.length == 0) {
+			return repository.findPage(predicate, pageable, new OrderSpecifier<>(Order.DESC,
+					Expressions.dateTimePath(LocalDateTime.class, repository.getPath(), "ngaySua")));
+		}
+
+		return repository.findPage(predicate, pageable, orders);
+	}
+
+	@Override
+	public Iterable<T> findAll(@Nullable Predicate predicate, OrderSpecifier<?>... orders) {
+		if (predicate == null) {
+			predicate = QBaseEntity.baseEntity.deleted.isFalse();
+		}
+
+		if (orders == null || orders.length == 0) {
+			return repository.findAll(predicate, new OrderSpecifier<>(Order.DESC,
+					Expressions.dateTimePath(LocalDateTime.class, repository.getPath(), "ngaySua")));
+		}
+		
+		return repository.findAll(predicate, orders);
+	}
+
+	//@Autowired
+	/*BaseRepository<T, Long> repository;
 	
 	public BaseServiceImpl() {
 	}
@@ -63,9 +95,9 @@ public class BaseServiceImpl<T extends BaseEntity<T>, ID> implements BaseService
 		}
 		
 		return repository.findAll(predicate, pageable, orders);
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public T findOneById(Long id) {
 		return repository.findOneById(id);
 	}
@@ -97,6 +129,6 @@ public class BaseServiceImpl<T extends BaseEntity<T>, ID> implements BaseService
 	@Override
 	public boolean existsById(Long id) {
 		return repository.existsById(id);
-	}
+	}*/
 
 }

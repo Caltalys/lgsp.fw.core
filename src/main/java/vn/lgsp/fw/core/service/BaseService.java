@@ -1,6 +1,6 @@
 package vn.lgsp.fw.core.service;
 
-import java.util.List;
+import javax.annotation.Nullable;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +12,11 @@ import vn.lgsp.fw.core.domain.BaseEntity;
 
 public interface BaseService<T extends BaseEntity<T>> {
 	
-	Page<T> findPage(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
+	Page<T> findAll(@Nullable Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
+	
+	Iterable<T> findAll(@Nullable Predicate predicate, OrderSpecifier<?>... orders);
+	
+	/*Page<T> findPage(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
 	
 	List<T> findAll(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
 	
@@ -24,6 +28,6 @@ public interface BaseService<T extends BaseEntity<T>> {
 
 	T update(Long id, T entity) ;
 
-	void delete(Long id);
+	void delete(Long id);*/
 	
 }
