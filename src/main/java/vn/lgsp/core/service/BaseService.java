@@ -1,4 +1,4 @@
-package vn.lgsp.fw.core.service;
+package vn.lgsp.core.service;
 
 import javax.annotation.Nullable;
 
@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 
-import vn.lgsp.fw.core.domain.BaseEntity;
+import vn.lgsp.core.domain.BaseEntity;
 
 public interface BaseService<T extends BaseEntity<T>> {
 	

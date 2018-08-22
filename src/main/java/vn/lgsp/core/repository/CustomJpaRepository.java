@@ -1,4 +1,4 @@
-package vn.lgsp.fw.core.repository;
+package vn.lgsp.core.repository;
 
 import java.io.Serializable;
 

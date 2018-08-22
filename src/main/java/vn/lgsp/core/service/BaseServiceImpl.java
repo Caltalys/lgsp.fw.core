@@ -1,4 +1,4 @@
-package vn.lgsp.fw.core.service;
+package vn.lgsp.core.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,9 +18,9 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.Expressions;
 
-import vn.lgsp.fw.core.domain.BaseEntity;
-import vn.lgsp.fw.core.domain.QBaseEntity;
-import vn.lgsp.fw.core.repository.BaseRepository;
+import vn.lgsp.core.domain.BaseEntity;
+import vn.lgsp.core.domain.QBaseEntity;
+import vn.lgsp.core.repository.BaseRepository;
 
 @Service
 @Transactional

@@ -1,4 +1,4 @@
-package vn.lgsp.fw.core.utils;
+package vn.lgsp.core.utils;
 
 import java.text.Normalizer;
 import java.util.regex.Pattern;

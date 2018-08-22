@@ -1,4 +1,4 @@
-package vn.lgsp.fw.core.domain;
+package vn.lgsp.core.domain;
 
 import java.time.LocalDateTime;
 
