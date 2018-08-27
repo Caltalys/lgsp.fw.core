@@ -20,8 +20,10 @@ import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.data.querydsl.EntityPathResolver;
 import org.springframework.data.querydsl.QSort;
 import org.springframework.data.querydsl.SimpleEntityPathResolver;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.data.repository.support.PageableExecutionUtils.TotalSupplier;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.SystemPropertyUtils;
 
 import com.querydsl.core.types.EntityPath;
@@ -33,9 +35,13 @@ import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 
-public class CustomQueryDslJpaRepository<T, ID extends Serializable> extends QueryDslJpaRepository<T, ID> implements CustomQueryDslPredicateExecutor<T, ID> {
+@NoRepositoryBean
+@Transactional(readOnly=true)
+public class BaseRepositoryImpl<T, ID extends Serializable> 
+	extends QueryDslJpaRepository<T, ID> implements BaseRepository<T, ID>{
 
-	private static final Logger log = LoggerFactory.getLogger(CustomQueryDslJpaRepository.class);
+	
+	private static final Logger log = LoggerFactory.getLogger(BaseRepositoryImpl.class);
 	
 	private EntityManager em;
 	private final EntityPath<T> path;
@@ -44,22 +50,15 @@ public class CustomQueryDslJpaRepository<T, ID extends Serializable> extends Que
     private final PathBuilder<T> builder;
     private static final EntityPathResolver DEFAULT_ENTITY_PATH_RESOLVER = SimpleEntityPathResolver.INSTANCE;
     
-	/**
-	 * Creates a new {@link BaseRepository} from the given domain class and {@link EntityManager}. This will use
-	 * the {@link SimpleEntityPathResolver} to translate the given domain class into an {@link EntityPath}.
-	 * 
-	 * @param entityInformation must not be {@literal null}.
-	 * @param entityManager must not be {@literal null}.
-	 */
-	public CustomQueryDslJpaRepository(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager) {
-		super(entityInformation, entityManager);
+    public BaseRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager entityManager) {
+    	super(entityInformation, entityManager);
 		this.em = entityManager;
         this.path = DEFAULT_ENTITY_PATH_RESOLVER.createPath(entityInformation.getJavaType());
         this.builder = new PathBuilder<>(path.getType(), path.getMetadata());
         this.querydsl = new Querydsl(entityManager, builder);
 	}
-	
-	@Override
+    
+    @Override
 	public Page<T> findPage(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
 		final JPQLQuery<?> countQuery = createCountQuery(predicate);
 		JPQLQuery<T> query = querydsl.applyPagination(pageable, createQuery(predicate).select(path));
@@ -122,4 +121,5 @@ public class CustomQueryDslJpaRepository<T, ID extends Serializable> extends Que
 		}
 		return query;
 	}
+
 }

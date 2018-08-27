@@ -25,7 +25,7 @@ import com.querydsl.core.types.Predicate;
  */
 @NoRepositoryBean
 @Transactional(readOnly=true)
-public interface BaseRepository<T,ID extends Serializable> extends CustomJpaRepository<T, ID>, QueryDslPredicateExecutor<T>{
+public interface BaseRepository<T,ID extends Serializable> extends JpaRepository<T, ID>, QueryDslPredicateExecutor<T>{
 
 	EntityPath<T> getPath();
 	
