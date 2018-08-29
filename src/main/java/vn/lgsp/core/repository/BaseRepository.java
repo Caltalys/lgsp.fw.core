@@ -2,6 +2,7 @@ package vn.lgsp.core.repository;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,4 +34,5 @@ public interface BaseRepository<T,ID extends Serializable> extends JpaRepository
 	
 	List<T> findAll(@Param("predicate") Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
 	
+	T findById(@Param("id") Long id);
 }

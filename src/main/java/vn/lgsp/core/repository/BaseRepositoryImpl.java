@@ -3,6 +3,7 @@ package vn.lgsp.core.repository;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
@@ -31,6 +32,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -87,6 +89,11 @@ public class BaseRepositoryImpl<T, ID extends Serializable>
         return entities;
 	}
 
+	@Override
+	public T findById(Long id) {
+		return getQuery(getPath()).where(builder.get("id").eq(id)).fetchOne();
+	}
+	
 	@Override
 	public EntityPath<T> getPath() {
 		final String path = StringUtils.uncapitalize(getDomainClass().getSimpleName());
