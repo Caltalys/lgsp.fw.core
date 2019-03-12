@@ -2,6 +2,7 @@ package vn.lgsp.core.domain;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
@@ -19,15 +20,19 @@ import lombok.Data;
 public abstract class Auditable<U >{
 
 	@CreatedDate
+	@Column(name = "\"ngayTao\"")
 	private LocalDateTime ngayTao;
 	
 	@LastModifiedDate
+	@Column(name = "\"ngaySua\"")
 	private LocalDateTime ngaySua;
 	
 	@CreatedBy
+	@Column(name = "\"nguoiTao\"")
 	private U nguoiTao;
 	
 	@LastModifiedBy
+	@Column(name = "\"nguoiSua\"")
 	private U nguoiSua;
 	
 }

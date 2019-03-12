@@ -31,7 +31,7 @@ public class BaseServiceImpl<T extends BaseEntity<T>, ID> implements BaseService
 	@Override
 	public Page<T> findAll(@Nullable Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders) {
 		if (predicate == null) {
-			predicate = QBaseEntity.baseEntity.deleted.isFalse();
+			predicate = QBaseEntity.baseEntity.daXoa.isFalse();
 		}
 
 		if (orders == null || orders.length == 0) {
@@ -45,7 +45,7 @@ public class BaseServiceImpl<T extends BaseEntity<T>, ID> implements BaseService
 	@Override
 	public Iterable<T> findAll(@Nullable Predicate predicate, OrderSpecifier<?>... orders) {
 		if (predicate == null) {
-			predicate = QBaseEntity.baseEntity.deleted.isFalse();
+			predicate = QBaseEntity.baseEntity.daXoa.isFalse();
 		}
 
 		if (orders == null || orders.length == 0) {

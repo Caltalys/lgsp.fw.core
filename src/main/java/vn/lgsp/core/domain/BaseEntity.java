@@ -1,6 +1,8 @@
 package vn.lgsp.core.domain;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -25,10 +27,11 @@ public class BaseEntity<T extends BaseEntity<T>> extends Auditable<String> imple
 	private static final long serialVersionUID = 9197809217082471305L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private boolean deleted;
+	@Column(name = "\"daXoa\"")
+	private boolean daXoa;
 
 	@Override
 	public boolean isNew() {

@@ -30,9 +30,9 @@ public interface BaseRepository<T,ID extends Serializable> extends JpaRepository
 
 	EntityPath<T> getPath();
 	
-	Page<T> findPage(@Param("predicate") Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
+	Page<T> findPage(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
 	
-	List<T> findAll(@Param("predicate") Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
+	List<T> findAll(Predicate predicate, Pageable pageable, OrderSpecifier<?>... orders);
 	
 	T findById(@Param("id") Long id);
 }
